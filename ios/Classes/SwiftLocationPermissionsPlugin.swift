@@ -2,9 +2,9 @@ import Flutter
 import UIKit
 import CoreLocation
 
-public class SwiftLocationPermissionsPlugin: NSObject, FlutterPlugin, CLLocationManagerDelegate {
-    private var locationManager: CLLocationManager = CLLocationManager()
-    private var globalResult: FlutterResult?
+public class SwiftLocationPermissionsPlugin: NSObject {
+    fileprivate var locationManager: CLLocationManager = CLLocationManager()
+    fileprivate var globalResult: FlutterResult?
     
     public static func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: "location_permissions", binaryMessenger: registrar.messenger())
@@ -18,67 +18,8 @@ public class SwiftLocationPermissionsPlugin: NSObject, FlutterPlugin, CLLocation
         self.globalResult = nil
     }
     
-    public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-        switch call.method {
-        case "requestLocation":
-            globalResult = result
-            requestLocation(call)
-            break;
-        case "getAccuracyAuthorization":
-            accuracyAuthorization(call, result: result)
-        case "getAuthorizationStatus":
-            locationAuthorization(call, result: result)
-        default:
-            result("iOS " + UIDevice.current.systemVersion)
-        }
-    }
-    
     func requestLocation(_ call: FlutterMethodCall) {
         self.locationManager.requestWhenInUseAuthorization()
-    }
-    
-    public func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        if let globalResult = self.globalResult {
-            if #available(iOS 14.0, *) {
-                let status = manager.authorizationStatus
-                switch status {
-                case .authorizedAlways:
-                    globalResult("authorizedAlways")
-                    break
-                case .authorizedWhenInUse:
-                    globalResult("authorizedWhenInUse")
-                    break
-                case .denied:
-                    globalResult("denied")
-                    break
-                case .notDetermined:
-                    globalResult("notDetermined")
-                    break
-                case .restricted:
-                    globalResult("restricted")
-                    break
-                default:
-                    break
-                }
-            } else {
-                // Fallback on earlier versions
-                let status = CLLocationManager.authorizationStatus()
-                switch status {
-                case .authorizedAlways:
-                    globalResult("authorizedAlways")
-                case .authorizedWhenInUse:
-                    globalResult("authorizedWhenInUse")
-                case .denied:
-                    globalResult("denied")
-                case .notDetermined:
-                    globalResult("notDetermined")
-                case .restricted:
-                    globalResult("restricted")
-                @unknown default:
-                    fatalError()
-                }
-            }
-        }
     }
     
     func accuracyAuthorization(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
@@ -86,18 +27,18 @@ public class SwiftLocationPermissionsPlugin: NSObject, FlutterPlugin, CLLocation
             let accuracyAuthorization = locationManager.accuracyAuthorization
             switch accuracyAuthorization {
             case .fullAccuracy:
-                result("fullAccuracy")
+                result(PermissionAccuracyStatus.fullAccuracy.rawValue)
                 break
             case .reducedAccuracy:
                 locationManager.requestTemporaryFullAccuracyAuthorization(withPurposeKey: "ExampleUsageDescription")
-                result("reducedAccuracy")
+                result(PermissionAccuracyStatus.reducedAccuracy.rawValue)
                 break
             default:
-                break
+                result(PermissionAccuracyStatus.reducedAccuracy.rawValue)
             }
         } else {
             // Fallback on earlier versions
-            result("No accuracy status on earlier versions")
+            result(PermissionAccuracyStatus.reducedAccuracy.rawValue)
         }
         
     }
@@ -107,19 +48,19 @@ public class SwiftLocationPermissionsPlugin: NSObject, FlutterPlugin, CLLocation
             let status = locationManager.authorizationStatus
             switch status {
             case .authorizedAlways:
-                result("authorizedAlways")
+                result(PermissionAuthorizationStatus.always.rawValue)
                 break
             case .authorizedWhenInUse:
-                result("authorizedWhenInUse")
+                result(PermissionAuthorizationStatus.whenInUse.rawValue)
                 break
             case .denied:
-                result("denied")
+                result(PermissionAuthorizationStatus.denied.rawValue)
                 break
             case .notDetermined:
-                result("notDetermined")
+                result(PermissionAuthorizationStatus.notDetermined.rawValue)
                 break
             case .restricted:
-                result("restricted")
+                result(PermissionAuthorizationStatus.restricted.rawValue)
                 break
             default:
                 break
@@ -129,22 +70,96 @@ public class SwiftLocationPermissionsPlugin: NSObject, FlutterPlugin, CLLocation
             let status = CLLocationManager.authorizationStatus()
             switch status {
             case .authorizedAlways:
-                result("authorizedAlways")
+                result(PermissionAuthorizationStatus.always.rawValue)
             case .authorizedWhenInUse:
-                result("authorizedWhenInUse")
+                result(PermissionAuthorizationStatus.whenInUse.rawValue)
             case .denied:
-                result("denied")
+                result(PermissionAuthorizationStatus.denied.rawValue)
             case .notDetermined:
-                result("notDetermined")
+                result(PermissionAuthorizationStatus.notDetermined.rawValue)
             case .restricted:
-                result("restricted")
+                result(PermissionAuthorizationStatus.restricted.rawValue)
+            default:
+                break
             }
         }
         
     }
     
+}
+
+extension SwiftLocationPermissionsPlugin: CLLocationManagerDelegate {
+    
+    public func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        if let globalResult = self.globalResult {
+            if #available(iOS 14.0, *) {
+                let status = manager.authorizationStatus
+                switch status {
+                case .authorizedAlways:
+                    globalResult(PermissionAuthorizationStatus.always.rawValue)
+                    break
+                case .authorizedWhenInUse:
+                    globalResult(PermissionAuthorizationStatus.whenInUse.rawValue)
+                    break
+                case .denied:
+                    globalResult(PermissionAuthorizationStatus.denied.rawValue)
+                    break
+                case .notDetermined:
+                    globalResult(PermissionAuthorizationStatus.notDetermined.rawValue)
+                    break
+                case .restricted:
+                    globalResult(PermissionAuthorizationStatus.restricted.rawValue)
+                    break
+                default:
+                    break
+                }
+            } else {
+                // Fallback on earlier versions
+                let status = CLLocationManager.authorizationStatus()
+                switch status {
+                case .authorizedAlways:
+                    globalResult(PermissionAuthorizationStatus.always.rawValue)
+                case .authorizedWhenInUse:
+                    globalResult(PermissionAuthorizationStatus.whenInUse.rawValue)
+                case .denied:
+                    globalResult(PermissionAuthorizationStatus.denied.rawValue)
+                case .notDetermined:
+                    globalResult(PermissionAuthorizationStatus.notDetermined.rawValue)
+                case .restricted:
+                    globalResult(PermissionAuthorizationStatus.restricted.rawValue)
+                default:
+                    break
+                }
+            }
+        }
+    }
     
     public func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         debugPrint(error)
+    }
+}
+
+extension SwiftLocationPermissionsPlugin: FlutterPlugin {
+    private enum MethodChannel: String {
+        case requestLocation
+        case accuracyAuthorization
+        case authorizationStatus
+    }
+    
+    public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        guard let method = MethodChannel(rawValue: call.method) else {
+            result(FlutterMethodNotImplemented)
+            return
+        }
+        switch method {
+            case .requestLocation:
+                globalResult = result
+                requestLocation(call)
+                break;
+            case .accuracyAuthorization:
+                accuracyAuthorization(call, result: result)
+            case .authorizationStatus:
+                locationAuthorization(call, result: result)
+        }
     }
 }

@@ -7,16 +7,16 @@
 
 import Foundation
 
-enum AuthorizationStatus: Int{
-    case always
+enum PermissionAuthorizationStatus: Int {
+    case always = 0
     case whenInUse
     case denied
     case notDetermined
     case restricted
 }
 
-enum AccuracyStatus {
-    case fullAccuracy
+enum PermissionAccuracyStatus: Int {
+    case fullAccuracy = 0
     case reducedAccuracy
     case notAvailable
 }
