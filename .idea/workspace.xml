@@ -2,22 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="21bfb5c6-f594-4d8c-87bb-6c0e2cfe5288" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/location_permissions/lib/src/location_permissions.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/src/location_permissions.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/location_permissions/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/location_permissions/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/location_permissions/example/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/location_permissions/example/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/location_permissions/ios/Classes/SwiftLocationPermissionsPlugin.swift" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/location_permissions/ios/Classes/SwiftLocationPermissionsPlugin.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/location_permissions/ios/Enums/Location.swift" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/location_permissions/ios/Enums/Location.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/location_permissions/lib/location_enums.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/location_permissions/lib/src/location_enums.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/location_permissions/lib/location_permissions.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/location_permissions/lib/location_permissions.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/location_permissions/test/location_permissions_test.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/location_permissions/test/location_permissions_test.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/main.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ios/Classes/SwiftLocationPermissionsPlugin.swift" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Classes/SwiftLocationPermissionsPlugin.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Enums/Location.swift" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Enums/Location.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/location_enums.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/location_enums.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/location_permissions.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/location_permissions.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/location_permissions_test.dart" beforeDir="false" afterPath="$PROJECT_DIR$/test/location_permissions_test.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,61 +55,89 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
+    <state x="360" y="201" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1599659795175">
+      <screen x="0" y="23" width="1792" height="1033" />
+    </state>
+    <state x="360" y="201" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1792.1033@0.23.1792.1033" timestamp="1599659795175" />
     <state x="634" y="293" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1599656036591">
       <screen x="0" y="23" width="1792" height="1034" />
     </state>
     <state x="634" y="293" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/1792.-400.2560.1417/0.23.1792.1034@0.23.1792.1034" timestamp="1599656036591" />
-    <state width="1750" height="501" key="GridCell.Tab.0.bottom" timestamp="1599657211689">
+    <state width="1750" height="501" key="GridCell.Tab.0.bottom" timestamp="1599660839052">
       <screen x="0" y="23" width="1792" height="1033" />
     </state>
+    <state width="1750" height="501" key="GridCell.Tab.0.bottom/0.23.1792.1033@0.23.1792.1033" timestamp="1599659540231" />
     <state width="1238" height="501" key="GridCell.Tab.0.bottom/1792.-400.2560.1417/0.23.1792.1031@1792.-400.2560.1417" timestamp="1599640468228" />
-    <state width="1750" height="501" key="GridCell.Tab.0.bottom/1792.-400.2560.1417/0.23.1792.1033@0.23.1792.1033" timestamp="1599657211689" />
+    <state width="1750" height="501" key="GridCell.Tab.0.bottom/1792.-400.2560.1417/0.23.1792.1033@0.23.1792.1033" timestamp="1599660839052" />
     <state width="1750" height="501" key="GridCell.Tab.0.bottom/1792.-400.2560.1417/0.23.1792.1034@0.23.1792.1034" timestamp="1599657069770" />
     <state width="1750" height="347" key="GridCell.Tab.0.bottom/1792.-423.2560.1440/0.0.1792.1120@0.0.1792.1120" timestamp="1599567908115" />
-    <state width="1750" height="501" key="GridCell.Tab.0.center" timestamp="1599657211689">
+    <state width="1750" height="501" key="GridCell.Tab.0.center" timestamp="1599660839051">
       <screen x="0" y="23" width="1792" height="1033" />
     </state>
+    <state width="1750" height="501" key="GridCell.Tab.0.center/0.23.1792.1033@0.23.1792.1033" timestamp="1599659540230" />
     <state width="1238" height="501" key="GridCell.Tab.0.center/1792.-400.2560.1417/0.23.1792.1031@1792.-400.2560.1417" timestamp="1599640468227" />
-    <state width="1750" height="501" key="GridCell.Tab.0.center/1792.-400.2560.1417/0.23.1792.1033@0.23.1792.1033" timestamp="1599657211689" />
+    <state width="1750" height="501" key="GridCell.Tab.0.center/1792.-400.2560.1417/0.23.1792.1033@0.23.1792.1033" timestamp="1599660839051" />
     <state width="1750" height="501" key="GridCell.Tab.0.center/1792.-400.2560.1417/0.23.1792.1034@0.23.1792.1034" timestamp="1599657069770" />
     <state width="1750" height="347" key="GridCell.Tab.0.center/1792.-423.2560.1440/0.0.1792.1120@0.0.1792.1120" timestamp="1599567908113" />
-    <state width="1750" height="501" key="GridCell.Tab.0.left" timestamp="1599657211688">
+    <state width="1750" height="501" key="GridCell.Tab.0.left" timestamp="1599660839051">
       <screen x="0" y="23" width="1792" height="1033" />
     </state>
+    <state width="1750" height="501" key="GridCell.Tab.0.left/0.23.1792.1033@0.23.1792.1033" timestamp="1599659540230" />
     <state width="1238" height="501" key="GridCell.Tab.0.left/1792.-400.2560.1417/0.23.1792.1031@1792.-400.2560.1417" timestamp="1599640468226" />
-    <state width="1750" height="501" key="GridCell.Tab.0.left/1792.-400.2560.1417/0.23.1792.1033@0.23.1792.1033" timestamp="1599657211688" />
+    <state width="1750" height="501" key="GridCell.Tab.0.left/1792.-400.2560.1417/0.23.1792.1033@0.23.1792.1033" timestamp="1599660839051" />
     <state width="1750" height="501" key="GridCell.Tab.0.left/1792.-400.2560.1417/0.23.1792.1034@0.23.1792.1034" timestamp="1599657069769" />
     <state width="1750" height="347" key="GridCell.Tab.0.left/1792.-423.2560.1440/0.0.1792.1120@0.0.1792.1120" timestamp="1599567908113" />
-    <state width="1750" height="501" key="GridCell.Tab.0.right" timestamp="1599657211689">
+    <state width="1750" height="501" key="GridCell.Tab.0.right" timestamp="1599660839052">
       <screen x="0" y="23" width="1792" height="1033" />
     </state>
+    <state width="1750" height="501" key="GridCell.Tab.0.right/0.23.1792.1033@0.23.1792.1033" timestamp="1599659540231" />
     <state width="1238" height="501" key="GridCell.Tab.0.right/1792.-400.2560.1417/0.23.1792.1031@1792.-400.2560.1417" timestamp="1599640468228" />
-    <state width="1750" height="501" key="GridCell.Tab.0.right/1792.-400.2560.1417/0.23.1792.1033@0.23.1792.1033" timestamp="1599657211689" />
+    <state width="1750" height="501" key="GridCell.Tab.0.right/1792.-400.2560.1417/0.23.1792.1033@0.23.1792.1033" timestamp="1599660839052" />
     <state width="1750" height="501" key="GridCell.Tab.0.right/1792.-400.2560.1417/0.23.1792.1034@0.23.1792.1034" timestamp="1599657069770" />
     <state width="1750" height="347" key="GridCell.Tab.0.right/1792.-423.2560.1440/0.0.1792.1120@0.0.1792.1120" timestamp="1599567908114" />
-    <state width="1750" height="501" key="GridCell.Tab.1.bottom" timestamp="1599657211626">
+    <state width="1750" height="501" key="GridCell.Tab.1.bottom" timestamp="1599660838992">
       <screen x="0" y="23" width="1792" height="1033" />
     </state>
-    <state width="1750" height="501" key="GridCell.Tab.1.bottom/1792.-400.2560.1417/0.23.1792.1033@0.23.1792.1033" timestamp="1599657211626" />
+    <state width="1750" height="501" key="GridCell.Tab.1.bottom/0.23.1792.1033@0.23.1792.1033" timestamp="1599659540131" />
+    <state width="1750" height="501" key="GridCell.Tab.1.bottom/1792.-400.2560.1417/0.23.1792.1033@0.23.1792.1033" timestamp="1599660838992" />
     <state width="1750" height="501" key="GridCell.Tab.1.bottom/1792.-400.2560.1417/0.23.1792.1034@0.23.1792.1034" timestamp="1599657069716" />
     <state width="1750" height="347" key="GridCell.Tab.1.bottom/1792.-423.2560.1440/0.0.1792.1120@0.0.1792.1120" timestamp="1599567908117" />
-    <state width="1750" height="501" key="GridCell.Tab.1.center" timestamp="1599657211626">
+    <state width="1750" height="501" key="GridCell.Tab.1.center" timestamp="1599660838991">
       <screen x="0" y="23" width="1792" height="1033" />
     </state>
-    <state width="1750" height="501" key="GridCell.Tab.1.center/1792.-400.2560.1417/0.23.1792.1033@0.23.1792.1033" timestamp="1599657211626" />
+    <state width="1750" height="501" key="GridCell.Tab.1.center/0.23.1792.1033@0.23.1792.1033" timestamp="1599659540131" />
+    <state width="1750" height="501" key="GridCell.Tab.1.center/1792.-400.2560.1417/0.23.1792.1033@0.23.1792.1033" timestamp="1599660838991" />
     <state width="1750" height="501" key="GridCell.Tab.1.center/1792.-400.2560.1417/0.23.1792.1034@0.23.1792.1034" timestamp="1599657069715" />
     <state width="1750" height="347" key="GridCell.Tab.1.center/1792.-423.2560.1440/0.0.1792.1120@0.0.1792.1120" timestamp="1599567908116" />
-    <state width="1750" height="501" key="GridCell.Tab.1.left" timestamp="1599657211625">
+    <state width="1750" height="501" key="GridCell.Tab.1.left" timestamp="1599660838991">
       <screen x="0" y="23" width="1792" height="1033" />
     </state>
-    <state width="1750" height="501" key="GridCell.Tab.1.left/1792.-400.2560.1417/0.23.1792.1033@0.23.1792.1033" timestamp="1599657211625" />
+    <state width="1750" height="501" key="GridCell.Tab.1.left/0.23.1792.1033@0.23.1792.1033" timestamp="1599659540131" />
+    <state width="1750" height="501" key="GridCell.Tab.1.left/1792.-400.2560.1417/0.23.1792.1033@0.23.1792.1033" timestamp="1599660838991" />
     <state width="1750" height="501" key="GridCell.Tab.1.left/1792.-400.2560.1417/0.23.1792.1034@0.23.1792.1034" timestamp="1599657069715" />
     <state width="1750" height="347" key="GridCell.Tab.1.left/1792.-423.2560.1440/0.0.1792.1120@0.0.1792.1120" timestamp="1599567908115" />
-    <state width="1750" height="501" key="GridCell.Tab.1.right" timestamp="1599657211626">
+    <state width="1750" height="501" key="GridCell.Tab.1.right" timestamp="1599660838992">
       <screen x="0" y="23" width="1792" height="1033" />
     </state>
-    <state width="1750" height="501" key="GridCell.Tab.1.right/1792.-400.2560.1417/0.23.1792.1033@0.23.1792.1033" timestamp="1599657211626" />
+    <state width="1750" height="501" key="GridCell.Tab.1.right/0.23.1792.1033@0.23.1792.1033" timestamp="1599659540131" />
+    <state width="1750" height="501" key="GridCell.Tab.1.right/1792.-400.2560.1417/0.23.1792.1033@0.23.1792.1033" timestamp="1599660838992" />
     <state width="1750" height="501" key="GridCell.Tab.1.right/1792.-400.2560.1417/0.23.1792.1034@0.23.1792.1034" timestamp="1599657069715" />
     <state width="1750" height="347" key="GridCell.Tab.1.right/1792.-423.2560.1440/0.0.1792.1120@0.0.1792.1120" timestamp="1599567908117" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/src/location_permissions.dart</url>
+          <line>13</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/src/location_permissions.dart</url>
+          <line>20</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

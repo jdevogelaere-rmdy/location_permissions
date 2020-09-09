@@ -38,7 +38,7 @@ public class SwiftLocationPermissionsPlugin: NSObject {
             }
         } else {
             // Fallback on earlier versions
-            result(PermissionAccuracyStatus.reducedAccuracy.rawValue)
+            result(PermissionAccuracyStatus.notAvailable.rawValue)
         }
         
     }
@@ -90,7 +90,28 @@ public class SwiftLocationPermissionsPlugin: NSObject {
 
 extension SwiftLocationPermissionsPlugin: CLLocationManagerDelegate {
     
+    public func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        print("[CLLocationManager] DEPRECATED didChangeAuthorization")
+        if let globalResult = self.globalResult {
+            switch status {
+            case .authorizedAlways:
+                globalResult(PermissionAuthorizationStatus.always.rawValue)
+            case .authorizedWhenInUse:
+                globalResult(PermissionAuthorizationStatus.whenInUse.rawValue)
+            case .denied:
+                globalResult(PermissionAuthorizationStatus.denied.rawValue)
+            case .notDetermined:
+                globalResult(PermissionAuthorizationStatus.notDetermined.rawValue)
+            case .restricted:
+                globalResult(PermissionAuthorizationStatus.restricted.rawValue)
+            default:
+                break
+            }
+        }
+    }
+    
     public func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        print("[CLLocationManager] didChangeAuthorization")
         if let globalResult = self.globalResult {
             if #available(iOS 14.0, *) {
                 let status = manager.authorizationStatus
@@ -116,6 +137,7 @@ extension SwiftLocationPermissionsPlugin: CLLocationManagerDelegate {
             } else {
                 // Fallback on earlier versions
                 let status = CLLocationManager.authorizationStatus()
+                print("[CLLocationManager] status: \(status.rawValue)")
                 switch status {
                 case .authorizedAlways:
                     globalResult(PermissionAuthorizationStatus.always.rawValue)
