@@ -21,8 +21,9 @@ class LocationPermissions {
     return AccuracyStatus.values[accuracyStatus];
   }
 
-  static Future<void> requestLocation() async {
-    return await _channel.invokeMethod('requestLocation');
+  static Future<void> requestLocationAuthorizationWithPurposeKey(
+      String purposeKey) async {
+    return await _channel.invokeMethod('requestLocation', purposeKey);
   }
 
   Stream<LocationPermissionStatus> getAuthorizationStatus() {

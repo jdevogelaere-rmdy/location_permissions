@@ -51,7 +51,9 @@ class _MyAppState extends State<MyApp> {
           children: [
             MaterialButton(
               onPressed: () async {
-                await LocationPermissions.requestLocation();
+                await LocationPermissions
+                    .requestLocationAuthorizationWithPurposeKey(
+                        "ExampleUsageDescription");
                 final authorizationStatus =
                     await LocationPermissions.authorizationStatus;
                 final accuracyStatus = await LocationPermissions.accuracyStatus;

@@ -9,6 +9,7 @@ public class SwiftLocationPermissionsPlugin: NSObject, FlutterStreamHandler {
     private var _eventSink: FlutterEventSink?
     private var _streamLocationAccuracyService: StreamLocationAccuracyAuthorizationService?
     private static let EVENT_CHANNEL_NAME = "location_permissions/events"
+    private var purposeKey: String = "ExampleUsageDescription"
     
     static public func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: "location_permissions", binaryMessenger: registrar.messenger())
@@ -25,6 +26,7 @@ public class SwiftLocationPermissionsPlugin: NSObject, FlutterStreamHandler {
     }
     
     func requestLocation(_ call: FlutterMethodCall) {
+        self.purposeKey = call.arguments as? String ?? ""
         self.locationManager.requestWhenInUseAuthorization()
     }
     
@@ -36,7 +38,7 @@ public class SwiftLocationPermissionsPlugin: NSObject, FlutterStreamHandler {
                 result(PermissionAccuracyStatus.fullAccuracy.rawValue)
                 break
             case .reducedAccuracy:
-                locationManager.requestTemporaryFullAccuracyAuthorization(withPurposeKey: "ExampleUsageDescription")
+                locationManager.requestTemporaryFullAccuracyAuthorization(withPurposeKey: purposeKey)
                 result(PermissionAccuracyStatus.reducedAccuracy.rawValue)
                 break
             default:
