@@ -24,4 +24,17 @@ class LocationPermissions {
   static Future<void> requestLocation() async {
     return await _channel.invokeMethod('requestLocation');
   }
+
+  Stream<LocationPermissionStatus> getAuthorizationStatus() {
+    return EventChannel('location_permissions/events')
+        .receiveBroadcastStream()
+        .map((event) {
+      final authorizationStatus = event["AuthorizationStatus"];
+      final accuracyStatus = event["AccuracyStatus"];
+      final accuracy = AccuracyStatus.values[accuracyStatus];
+      final authorization = AuthorizationStatus.values[authorizationStatus];
+      return LocationPermissionStatus(
+          authorizationStatus: authorization, accuracyStatus: accuracy);
+    });
+  }
 }

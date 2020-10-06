@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:location_permissions/location_permissions.dart';
 
@@ -13,10 +15,29 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   AuthorizationStatus _authorizationStatus = AuthorizationStatus.notDetermined;
   AccuracyStatus _accuracyStatus = AccuracyStatus.notAvailable;
+  StreamSubscription<LocationPermissionStatus> _accuracyStatusSubscription;
 
   @override
   void initState() {
     super.initState();
+
+    _accuracyStatusSubscription = LocationPermissions()
+        .getAuthorizationStatus()
+        .listen((LocationPermissionStatus status) {
+      setState(() {
+        _accuracyStatus = status.accuracyStatus;
+        _authorizationStatus = status.authorizationStatus;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    if (_accuracyStatusSubscription != null) {
+      _accuracyStatusSubscription.cancel();
+      _accuracyStatusSubscription = null;
+    }
+    super.dispose();
   }
 
   @override

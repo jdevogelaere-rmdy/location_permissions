@@ -2,14 +2,20 @@ import Flutter
 import UIKit
 import CoreLocation
 
-public class SwiftLocationPermissionsPlugin: NSObject {
+public class SwiftLocationPermissionsPlugin: NSObject, FlutterStreamHandler {
+    
     fileprivate var locationManager: CLLocationManager = CLLocationManager()
     fileprivate var globalResult: FlutterResult?
+    private var _eventSink: FlutterEventSink?
+    private var _streamLocationAccuracyService: StreamLocationAccuracyAuthorizationService?
+    private static let EVENT_CHANNEL_NAME = "location_permissions/events"
     
-    public static func register(with registrar: FlutterPluginRegistrar) {
+    static public func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: "location_permissions", binaryMessenger: registrar.messenger())
+        let eventsChannel = FlutterEventChannel(name: EVENT_CHANNEL_NAME, binaryMessenger: registrar.messenger())
         let instance = SwiftLocationPermissionsPlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
+        eventsChannel.setStreamHandler(instance)
     }
     
     override init() {
@@ -84,6 +90,23 @@ public class SwiftLocationPermissionsPlugin: NSObject {
             }
         }
         
+    }
+    
+    public func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {
+        if _streamLocationAccuracyService != nil {
+            return FlutterError.init(
+                code: "ALLREADY_LISTENING",
+                message: "You are already listening for location accuracy changes. Create a new instance or stop listening to the current stream.",
+                details: nil)
+        }
+        _streamLocationAccuracyService = StreamLocationAccuracyAuthorizationService.init(resultHandler: events);
+        
+        return nil
+    }
+    
+    public func onCancel(withArguments arguments: Any?) -> FlutterError? {
+        //TODO
+        return nil
     }
     
 }
@@ -174,14 +197,14 @@ extension SwiftLocationPermissionsPlugin: FlutterPlugin {
             return
         }
         switch method {
-            case .requestLocation:
-                globalResult = result
-                requestLocation(call)
-                break;
-            case .accuracyAuthorization:
-                accuracyAuthorization(call, result: result)
-            case .authorizationStatus:
-                locationAuthorization(call, result: result)
+        case .requestLocation:
+            globalResult = result
+            requestLocation(call)
+            break;
+        case .accuracyAuthorization:
+            accuracyAuthorization(call, result: result)
+        case .authorizationStatus:
+            locationAuthorization(call, result: result)
         }
     }
 }
