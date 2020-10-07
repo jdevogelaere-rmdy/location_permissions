@@ -8,6 +8,13 @@ enum AuthorizationStatus {
 
 enum AccuracyStatus { fullAccuracy, reducedAccuracy, notAvailable }
 
+enum PermissionStatus {
+  unknown,
+  denied,
+  granted,
+  restricted,
+}
+
 class LocationPermissionStatus {
   final AuthorizationStatus authorizationStatus;
   final AccuracyStatus accuracyStatus;

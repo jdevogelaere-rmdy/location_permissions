@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/services.dart';
 import 'package:location_permissions/src/location_enums.dart';
@@ -8,34 +9,63 @@ class LocationPermissions {
       const MethodChannel('location_permissions');
 
   static Future<AuthorizationStatus> get authorizationStatus async {
-    final int authorizationStatus =
-        await _channel.invokeMethod('authorizationStatus');
+    if (Platform.isIOS) {
+      final int authorizationStatus =
+          await _channel.invokeMethod('authorizationStatus');
 
-    return AuthorizationStatus.values[authorizationStatus];
+      return AuthorizationStatus.values[authorizationStatus];
+    } else {
+      final int status =
+          await _channel.invokeMethod('checkPermissionStatus', 0);
+
+      final permissionStatus = PermissionStatus.values[status];
+
+      return permissionStatus == PermissionStatus.granted
+          ? AuthorizationStatus.always
+          : AuthorizationStatus.denied;
+    }
   }
 
   static Future<AccuracyStatus> get accuracyStatus async {
-    final int accuracyStatus =
-        await _channel.invokeMethod('accuracyAuthorization');
+    if (Platform.isIOS) {
+      final int accuracyStatus =
+          await _channel.invokeMethod('accuracyAuthorization');
 
-    return AccuracyStatus.values[accuracyStatus];
+      return AccuracyStatus.values[accuracyStatus];
+    } else {
+      return AccuracyStatus.fullAccuracy;
+    }
   }
 
   static Future<void> requestLocationAuthorizationWithPurposeKey(
       String purposeKey) async {
-    return await _channel.invokeMethod('requestLocation', purposeKey);
+    if (Platform.isIOS) {
+      return await _channel.invokeMethod('requestLocation', purposeKey);
+    } else {
+      return await _channel.invokeMethod('requestPermission', 0);
+    }
   }
 
   Stream<LocationPermissionStatus> getAuthorizationStatus() {
-    return EventChannel('location_permissions/events')
-        .receiveBroadcastStream()
-        .map((event) {
-      final authorizationStatus = event["AuthorizationStatus"];
-      final accuracyStatus = event["AccuracyStatus"];
-      final accuracy = AccuracyStatus.values[accuracyStatus];
-      final authorization = AuthorizationStatus.values[authorizationStatus];
-      return LocationPermissionStatus(
-          authorizationStatus: authorization, accuracyStatus: accuracy);
-    });
+    if (Platform.isIOS) {
+      return EventChannel('location_permissions/events')
+          .receiveBroadcastStream()
+          .map((event) {
+        final authorizationStatus = event["AuthorizationStatus"];
+        final accuracyStatus = event["AccuracyStatus"];
+        final accuracy = AccuracyStatus.values[accuracyStatus];
+        final authorization = AuthorizationStatus.values[authorizationStatus];
+        return LocationPermissionStatus(
+            authorizationStatus: authorization, accuracyStatus: accuracy);
+      });
+    } else {
+      assert(Platform.isAndroid,
+          'Listening to service state changes is only supported on Android.');
+
+      /*return EventChannel('location_permissions/events')
+          .receiveBroadcastStream()
+          .map((dynamic status) =>
+              status ? ServiceStatus.enabled : ServiceStatus.disabled);*/
+    }
   }
 }
