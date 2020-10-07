@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/services.dart';
+import 'package:location_permissions/location_permissions.dart';
 import 'package:location_permissions/src/location_enums.dart';
 
 class LocationPermissions {
@@ -15,14 +16,9 @@ class LocationPermissions {
 
       return AuthorizationStatus.values[authorizationStatus];
     } else {
-      final int status =
-          await _channel.invokeMethod('checkPermissionStatus', 0);
+      final int status = await _channel.invokeMethod('locationAuthorisation');
 
-      final permissionStatus = PermissionStatus.values[status];
-
-      return permissionStatus == PermissionStatus.granted
-          ? AuthorizationStatus.always
-          : AuthorizationStatus.denied;
+      return AuthorizationStatus.values[status];
     }
   }
 
@@ -42,7 +38,7 @@ class LocationPermissions {
     if (Platform.isIOS) {
       return await _channel.invokeMethod('requestLocation', purposeKey);
     } else {
-      return await _channel.invokeMethod('requestPermission', 0);
+      return await _channel.invokeMethod('requestPermission');
     }
   }
 
@@ -62,10 +58,15 @@ class LocationPermissions {
       assert(Platform.isAndroid,
           'Listening to service state changes is only supported on Android.');
 
-      /*return EventChannel('location_permissions/events')
+      return EventChannel('location_permissions/events')
           .receiveBroadcastStream()
-          .map((dynamic status) =>
-              status ? ServiceStatus.enabled : ServiceStatus.disabled);*/
+          .map((status) {
+        final findAuthorisationStatus = status as int;
+        return LocationPermissionStatus(
+            authorizationStatus:
+                AuthorizationStatus.values[findAuthorisationStatus],
+            accuracyStatus: AccuracyStatus.fullAccuracy);
+      });
     }
   }
 }

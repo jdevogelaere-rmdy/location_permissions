@@ -58,6 +58,19 @@ public class LocationPermissionsPlugin implements MethodCallHandler, EventChanne
     })
     private @interface PermissionStatus {}
 
+    //-))
+    private static final int LOCATION_AUTHORISATION_ALWAYS = 0;
+    private static final int LOCATION_AUTHORISATION_WHEN_IN_USE = 1;
+    private static final int LOCATION_AUTHORISATION_DENIED = 2;
+
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({
+            LOCATION_AUTHORISATION_ALWAYS,
+            LOCATION_AUTHORISATION_WHEN_IN_USE,
+            LOCATION_AUTHORISATION_DENIED
+    })
+    private @interface AuthorisationStatus {}
+
     //SERVICE_STATUS
     private static final int SERVICE_STATUS_UNKNOWN = 0;
     private static final int SERVICE_STATUS_DISABLED = 1;
@@ -156,7 +169,7 @@ public class LocationPermissionsPlugin implements MethodCallHandler, EventChanne
                 }
 
                 mResult = result;
-                requestPermissions((int) call.arguments);
+                requestPermissions();
                 break;
             case "shouldShowRequestPermissionRationale":
                 final boolean shouldShow =
@@ -168,6 +181,11 @@ public class LocationPermissionsPlugin implements MethodCallHandler, EventChanne
                 boolean isOpen = LocationPermissionsPlugin.openAppSettings(applicationContext);
                 result.success(isOpen);
                 break;
+            case "locationAuthorisation":
+                @AuthorisationStatus
+                final int authorisationStatus = LocationPermissionsPlugin.checkAuthorisationStatus(applicationContext);
+                result.success(authorisationStatus);
+                break;
             default:
                 result.notImplemented();
                 break;
@@ -176,7 +194,7 @@ public class LocationPermissionsPlugin implements MethodCallHandler, EventChanne
 
     @Override
     public void onListen(Object arguments, EventChannel.EventSink events) {
-        events.success(isLocationServiceEnabled(applicationContext));
+        events.success(checkAuthorisationStatus(applicationContext));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             applicationContext.registerReceiver(mReceiver, mIntentFilter);
             mEventSink = events;
@@ -192,6 +210,27 @@ public class LocationPermissionsPlugin implements MethodCallHandler, EventChanne
             applicationContext.unregisterReceiver(mReceiver);
             mEventSink = null;
         }
+    }
+
+    @AuthorisationStatus
+    private static int checkAuthorisationStatus(Context context) {
+        boolean hasPermission = (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+            boolean hasBackgroundPermission =
+                    (ContextCompat.checkSelfPermission(context,
+                            Manifest.permission.ACCESS_BACKGROUND_LOCATION)) == PackageManager.PERMISSION_GRANTED;
+            boolean hasAlwaysPermission = hasPermission && hasBackgroundPermission;
+            boolean whenInUse = hasPermission && !hasBackgroundPermission;
+
+            if(hasAlwaysPermission) {
+                return LOCATION_AUTHORISATION_ALWAYS;
+            }else if (whenInUse) {
+                return LOCATION_AUTHORISATION_WHEN_IN_USE;
+            }else {
+                return LOCATION_AUTHORISATION_DENIED;
+            }
+        }
+        return hasPermission ? LOCATION_AUTHORISATION_ALWAYS : LOCATION_AUTHORISATION_DENIED;
     }
 
     @PermissionStatus
@@ -241,17 +280,18 @@ public class LocationPermissionsPlugin implements MethodCallHandler, EventChanne
         return isLocationServiceEnabled(context) ? SERVICE_STATUS_ENABLED : SERVICE_STATUS_DISABLED;
     }
 
-    private void requestPermissions(@PermissionLevel int permissionLevel) {
+    private void requestPermissions() {
         if (activity == null) {
             Log.d(LOG_TAG, "Unable to detect current Activity.");
 
             processResult(PERMISSION_STATUS_UNKNOWN);
             return;
         }
+        System.out.println("requesting permission");
+//        @AuthorisationStatus final int permissionStatus = checkAuthorisationStatus(activity);
 
-        @PermissionStatus final int permissionStatus = checkPermissionStatus(activity, permissionLevel);
-        if (permissionStatus != PERMISSION_STATUS_GRANTED) {
-            final List<String> names = getNamesForLevel(activity, permissionLevel);
+        if (true) {
+            final List<String> names = getNames(activity);
 
             ActivityCompat.requestPermissions(
                     activity, names.toArray(new String[0]), PERMISSION_CODE);
@@ -294,6 +334,16 @@ public class LocationPermissionsPlugin implements MethodCallHandler, EventChanne
     private void processResult(@PermissionStatus int status) {
         mResult.success(status);
         mResult = null;
+    }
+
+    private static List<String> getNames(Context context) {
+        final ArrayList<String> names = new ArrayList<>();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            names.add(Manifest.permission.ACCESS_BACKGROUND_LOCATION);
+        }
+        names.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+        names.add(Manifest.permission.ACCESS_FINE_LOCATION);
+        return names;
     }
 
     private static List<String> getNamesForLevel(Context context, @PermissionLevel int permissionLevel) {
