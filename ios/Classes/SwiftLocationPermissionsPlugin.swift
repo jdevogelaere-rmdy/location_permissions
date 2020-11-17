@@ -210,3 +210,18 @@ extension SwiftLocationPermissionsPlugin: FlutterPlugin {
         }
     }
 }
+
+enum PermissionAuthorizationStatus: Int {
+    case always = 0
+    case whenInUse
+    case denied
+    case notDetermined
+    case restricted
+}
+
+enum PermissionAccuracyStatus: Int {
+    case fullAccuracy = 0
+    case reducedAccuracy
+    case notAvailable
+}
+
