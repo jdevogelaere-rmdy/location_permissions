@@ -159,7 +159,7 @@ public class LocationPermissionsPlugin implements MethodCallHandler, EventChanne
                 final int serviceStatus = LocationPermissionsPlugin.checkServiceStatus(applicationContext);
                 result.success(serviceStatus);
                 break;
-            case "requestPermission":
+            case "requestForegroundLocationPermission":
                 if (mResult != null) {
                     result.error(
                             "ERROR_ALREADY_REQUESTING_PERMISSIONS",
@@ -169,7 +169,7 @@ public class LocationPermissionsPlugin implements MethodCallHandler, EventChanne
                 }
 
                 mResult = result;
-                requestPermissions();
+                requestForegroundPermissions();
                 break;
             case "shouldShowRequestPermissionRationale":
                 final boolean shouldShow =
@@ -280,7 +280,7 @@ public class LocationPermissionsPlugin implements MethodCallHandler, EventChanne
         return isLocationServiceEnabled(context) ? SERVICE_STATUS_ENABLED : SERVICE_STATUS_DISABLED;
     }
 
-    private void requestPermissions() {
+    private void requestForegroundPermissions() {
         if (activity == null) {
             Log.d(LOG_TAG, "Unable to detect current Activity.");
 
@@ -291,7 +291,7 @@ public class LocationPermissionsPlugin implements MethodCallHandler, EventChanne
 //        @AuthorisationStatus final int permissionStatus = checkAuthorisationStatus(activity);
 
         if (true) {
-            final List<String> names = getNames(activity);
+            final List<String> names = getNamesForLevel(activity, LOCATION_AUTHORISATION_WHEN_IN_USE);
 
             ActivityCompat.requestPermissions(
                     activity, names.toArray(new String[0]), PERMISSION_CODE);
@@ -338,7 +338,7 @@ public class LocationPermissionsPlugin implements MethodCallHandler, EventChanne
 
     private static List<String> getNames(Context context) {
         final ArrayList<String> names = new ArrayList<>();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
             names.add(Manifest.permission.ACCESS_BACKGROUND_LOCATION);
         }
         names.add(Manifest.permission.ACCESS_COARSE_LOCATION);

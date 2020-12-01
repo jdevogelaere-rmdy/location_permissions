@@ -38,7 +38,7 @@ class LocationPermissions {
     if (Platform.isIOS) {
       return await _channel.invokeMethod('requestLocation', purposeKey);
     } else {
-      return await _channel.invokeMethod('requestPermission');
+      return await _channel.invokeMethod('requestForegroundLocationPermission');
     }
   }
 
